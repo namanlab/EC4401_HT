@@ -158,6 +158,51 @@ data.frame(ast_values = ast_values, res = res3) %>%
   theme_bw()
 
 
+df1 = data.frame(ast_values = ast_values, res = res1)
+df1$Prior = "Beta(5, 1)"
+df2 = data.frame(ast_values = ast_values, res = res2)
+df2$Prior = "Beta(1, 5)"
+df3 = data.frame(ast_values = ast_values, res = res3)
+df3$Prior = "U(0, 1)"
+rbind(df1, df2, df3) %>%
+  ggplot(aes(x = ast_values, y = res, color = Prior)) +
+  geom_line() +
+  annotate("rect", xmin = 0.08080808, xmax = 0.3333333, 
+           ymin = 0, ymax = Inf, fill = "green", alpha = 0.3) +
+  annotate("rect", xmin = 0.1212121, xmax = 0.3030303, 
+           ymin = 0, ymax = Inf, fill = "blue", alpha = 0.3) +
+  annotate("rect", xmin = 0.1717172, xmax = 0.2525253, 
+           ymin = 0, ymax = Inf, fill = "red", alpha = 0.3) +
+  labs(x = "α*", y = "", title = "Plot of Differences under Various Priors",
+       subtitle = "Pooling Equilibrium") +
+  theme_bw() +
+  scale_y_sqrt()
+
+# Alt legend:
+df1 = data.frame(ast_values = ast_values, res = res1)
+df1$Prior = "0.83"
+df2 = data.frame(ast_values = ast_values, res = res2)
+df2$Prior = "0.17"
+df3 = data.frame(ast_values = ast_values, res = res3)
+df3$Prior = "0.5"
+rbind(df1, df2, df3) %>%
+  ggplot(aes(x = ast_values, y = res, color = Prior)) +
+  geom_line() +
+  annotate("rect", xmin = 0.08080808, xmax = 0.3333333, 
+           ymin = 0, ymax = Inf, fill = "green", alpha = 0.3) +
+  annotate("rect", xmin = 0.1212121, xmax = 0.3030303, 
+           ymin = 0, ymax = Inf, fill = "blue", alpha = 0.3) +
+  annotate("rect", xmin = 0.1717172, xmax = 0.2525253, 
+           ymin = 0, ymax = Inf, fill = "red", alpha = 0.3) +
+  labs(x = "α*", y = "", title = "Plot of Differences under Various Priors",
+       subtitle = "Pooling Equilibrium", color = "Prior Mean",
+       caption = "Higher Prior Mean shows higher presence of High Type Sellers") +
+  theme_bw() +
+  scale_y_sqrt() +
+  scale_color_manual(values = c("0.83" = "green", "0.17" = "red", "0.5" = "blue"))
+
+
+
 ################################################################################
 #################################### separating ################################
 ################################################################################
@@ -239,3 +284,24 @@ data.frame(ast_values = alpha_values, res = low_deviations) %>%
   labs(x = "α*", y = "", title = "Plot of Differences for Low Type",
        subtitle = "Low Type No Deviation For [0, 0.09] and [0.19, 1]") +
   theme_bw()
+
+
+
+df1 = data.frame(ast_values = alpha_values, res = high_deviations)
+df1$Type = "High"
+df2 = data.frame(ast_values = alpha_values, res = low_deviations)
+df2$Type = "Low"
+rbind(df1, df2) %>%
+  ggplot(aes(x = ast_values, y = res, color = Type)) +
+  geom_line() +
+  annotate("rect", xmin = 0, xmax = 0.09090909, 
+           ymin = 0, ymax = Inf, fill = "blue", alpha = 0.3) +
+  annotate("rect", xmin = 0.1919192, xmax = 1, 
+           ymin = 0, ymax = Inf, fill = "blue", alpha = 0.3) +
+  annotate("rect", xmin = 0.1313131, xmax = 0.2525253, 
+           ymin = 0, ymax = Inf, fill = "red", alpha = 0.3) +
+  labs(x = "α*", y = "", title = "Plot of Differences under Various Priors",
+       subtitle = "Pooling Equilibrium") +
+  theme_bw() +
+  scale_y_sqrt()
+
